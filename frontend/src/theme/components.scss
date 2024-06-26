@@ -1,0 +1,20 @@
+button,
+input {
+  font-family: 'Poppins';
+}
+
+.el-input {
+  &__wrapper {
+    border-radius: 50px;
+    padding: 0 20px;
+  }
+}
+
+.el-input-group__append {
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+
+  .el-icon {
+    color: $color-primary;
+  }
+}

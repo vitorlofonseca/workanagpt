@@ -1,10 +1,7 @@
-$color-black: #1d0300;
-$color-white: #fffef8;
+$color-black: #3d3d3d;
+$color-white: #fff;
 
-$color-primary: #a94438;
-
-$color-secondary: #e6baa3;
-$color-secondary-light-2: #f4d8ca;
+$color-primary: #4d2d9f;
 
 $color-grey-1: #4a4747;
 $color-grey-2: #5c5959;
@@ -16,8 +13,6 @@ $color-grey-7: #aba8a8;
 $color-green: #28bb49;
 $color-warning: #d9b043;
 $color-danger: #d03333;
-
-$color-link: #29517a;
 
 :root {
   --el-color-primary: #{$color-primary};

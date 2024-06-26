@@ -1,7 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Sidebar from '@/components/Sidebar.vue'
+import Chat from '@/components/Chat.vue'
+</script>
 
 <template>
-  <main>
-    <h1>Welcome to workana gpt</h1>
+  <main class="Container">
+    <Sidebar />
+    <Chat />
   </main>
 </template>
+
+<style scoped lang="scss">
+.Container {
+  display: flex;
+}
+</style>
