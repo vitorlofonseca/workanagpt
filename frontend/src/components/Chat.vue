@@ -1,18 +1,57 @@
 <script setup lang="ts">
 import { ElInput, ElButton } from 'element-plus'
 import { Promotion } from '@element-plus/icons-vue'
+import { ref, type Ref } from 'vue'
+import EmptyChat from './EmptyChat.vue'
+import ChatMessages from './ChatMessages.vue'
+import { type Message } from '@/domain/Message'
+
+const mockedAnswers = [
+  {
+    question: 'O que devo fazer para ser um bom freelancer?',
+    answer: 'Ser um bom freelancer envolve diversas habilidades e práticas. Pipipi popopo'
+  }
+]
+
+const messages: Ref<Message[]> = ref([])
+
+const searchInput = ref('')
+
+const onSubmitPrompt = () => {
+  if (searchInput.value === '') {
+    return
+  }
+
+  messages.value.push({ author: 'user', message: searchInput.value })
+
+  for (const index in mockedAnswers) {
+    if (mockedAnswers[index].question === searchInput.value) {
+      messages.value.push({ author: 'robot', message: mockedAnswers[index].answer })
+      searchInput.value = ''
+      return
+    }
+  }
+
+  messages.value.push({
+    author: 'robot',
+    message: 'Desculpa, não consigo te responder essa pergunta'
+  })
+  searchInput.value = ''
+}
 </script>
 
 <template>
   <div class="ChatContainer">
     <div class="Content">
-      <div class="EmptyChat">
-        <img class="EmptyChat__Logo" src="@/assets/images/workana-logo.png" alt="Saci Logo" />
-        <h2 class="EmptyChat__Title">O que você precisa saber do Workana GPT?</h2>
-      </div>
-      <ElInput placeholder="Pergunte aqui algo sobre o mercado de freelancing">
+      <EmptyChat v-if="messages.length === 0" />
+      <ChatMessages v-else :messages="messages" />
+
+      <ElInput
+        v-model="searchInput"
+        placeholder="Pergunte aqui algo sobre o mercado de freelancing"
+      >
         <template #append>
-          <ElButton :icon="Promotion" />
+          <ElButton @click="onSubmitPrompt" :icon="Promotion" />
         </template>
       </ElInput>
     </div>
@@ -29,23 +68,7 @@ import { Promotion } from '@element-plus/icons-vue'
   flex-grow: 1;
 
   .Content {
-    max-width: 80%;
-  }
-
-  .EmptyChat {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 85vh;
-
-    &__Logo {
-      width: 85px;
-    }
-
-    &__Title {
-      text-align: center;
-    }
+    width: 80%;
   }
 }
 </style>
