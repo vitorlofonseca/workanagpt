@@ -18,3 +18,15 @@ input {
     color: $color-primary;
   }
 }
+
+.el-drawer {
+  &__body {
+    padding: unset;
+  }
+
+  &__header {
+    background-color: lighten($color: $color-primary, $amount: 55);
+    margin-bottom: unset;
+    padding-bottom: 32px;
+  }
+}
