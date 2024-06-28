@@ -5,10 +5,14 @@ import type { Chat } from '@/domain/Chat'
 
 const chatsStore = useChatsStore()
 
-const emit = defineEmits(['change-chat'])
+const emit = defineEmits(['change-chat', 'add-chat'])
 
 const onClickChat = (chat: Chat) => {
   emit('change-chat', chat)
+}
+
+const onClickAddChat = () => {
+  emit('add-chat')
 }
 </script>
 
@@ -20,7 +24,7 @@ const onClickChat = (chat: Chat) => {
         src="@/assets/images/workana-lettering.png"
         alt="Workana lettering logo"
       />
-      <CirclePlus class="SidebarContent__AddIcon" />
+      <CirclePlus @click="onClickAddChat" class="SidebarContent__AddIcon" />
     </div>
 
     <div v-if="chatsStore.chats.length > 0" class="ChatsList">

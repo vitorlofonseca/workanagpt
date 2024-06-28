@@ -24,11 +24,15 @@ onMounted(() => {
 const onChangeChat = (selectedChat: ChatDomain) => {
   chat.value = selectedChat
 }
+
+const onAddChat = () => {
+  chat.value = {} as ChatDomain
+}
 </script>
 
 <template>
   <main class="Container">
-    <Sidebar class="Sidebar" @change-chat="onChangeChat" />
+    <Sidebar class="Sidebar" @change-chat="onChangeChat" @add-chat="onAddChat" />
     <Chat :chat="chat" @initialize-chat="initializeChat" />
   </main>
 </template>
