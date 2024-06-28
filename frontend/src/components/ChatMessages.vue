@@ -23,6 +23,9 @@ defineProps<{
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 20px;
 }
 
 .Message {

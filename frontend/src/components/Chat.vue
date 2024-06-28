@@ -4,7 +4,14 @@ import { Promotion } from '@element-plus/icons-vue'
 import { ref, type Ref } from 'vue'
 import EmptyChat from './EmptyChat.vue'
 import ChatMessages from './ChatMessages.vue'
-import { type Message } from '@/domain/Message'
+import type { Chat } from '@/domain/Chat'
+import { useChatsStore } from '@/stores/chats/index'
+
+const chatsStore = useChatsStore()
+
+const props = defineProps<{
+  chat: Chat
+}>()
 
 const mockedAnswers = [
   {
@@ -13,7 +20,15 @@ const mockedAnswers = [
   }
 ]
 
-const messages: Ref<Message[]> = ref([])
+const emit = defineEmits(['initialize-chat'])
+
+const initializeChat = (name: string) => {
+  if (props.chat.name) {
+    return
+  }
+
+  emit('initialize-chat', name)
+}
 
 const searchInput = ref('')
 
@@ -22,29 +37,33 @@ const onSubmitPrompt = () => {
     return
   }
 
-  messages.value.push({ author: 'user', message: searchInput.value })
+  initializeChat(searchInput.value)
+  props.chat.messages.push({ author: 'user', message: searchInput.value })
 
   for (const index in mockedAnswers) {
     if (mockedAnswers[index].question === searchInput.value) {
-      messages.value.push({ author: 'robot', message: mockedAnswers[index].answer })
+      props.chat.messages.push({ author: 'robot', message: mockedAnswers[index].answer })
       searchInput.value = ''
+      chatsStore.pushMessagesToChat(props.chat.messages, props.chat)
       return
     }
   }
 
-  messages.value.push({
+  props.chat.messages.push({
     author: 'robot',
     message: 'Desculpa, não consigo te responder essa pergunta'
   })
+
   searchInput.value = ''
+  chatsStore.pushMessagesToChat(props.chat.messages, props.chat)
 }
 </script>
 
 <template>
   <div class="ChatContainer">
     <div class="Content">
-      <EmptyChat v-if="messages.length === 0" />
-      <ChatMessages v-else :messages="messages" />
+      <EmptyChat v-if="!chat?.messages?.length" />
+      <ChatMessages v-else :messages="chat?.messages" />
 
       <ElInput
         v-model="searchInput"
@@ -68,7 +87,7 @@ const onSubmitPrompt = () => {
   flex-grow: 1;
 
   .Content {
-    width: 80%;
+    width: 90%;
   }
 }
 </style>
