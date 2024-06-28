@@ -20,11 +20,15 @@ onMounted(() => {
   chatsStore.initializeChats()
   chats.value = chatsStore.getChats()
 })
+
+const onChangeChat = (selectedChat: ChatDomain) => {
+  chat.value = selectedChat
+}
 </script>
 
 <template>
   <main class="Container">
-    <Sidebar class="Sidebar" />
+    <Sidebar class="Sidebar" @change-chat="onChangeChat" />
     <Chat :chat="chat" @initialize-chat="initializeChat" />
   </main>
 </template>

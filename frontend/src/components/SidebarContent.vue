@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { CirclePlus } from '@element-plus/icons-vue'
 import { useChatsStore } from '@/stores/chats/index'
+import type { Chat } from '@/domain/Chat'
 
 const chatsStore = useChatsStore()
 
-defineEmits(['change-chat'])
+const emit = defineEmits(['change-chat'])
+
+const onClickChat = (chat: Chat) => {
+  emit('change-chat', chat)
+}
 </script>
 
 <template>
@@ -19,7 +24,9 @@ defineEmits(['change-chat'])
     </div>
 
     <div v-if="chatsStore.chats.length > 0" class="ChatsList">
-      <div v-for="chat in chatsStore.chats" class="ChatsList__Chat">{{ chat.name }}</div>
+      <div v-for="chat in chatsStore.chats" class="ChatsList__Chat" @click="onClickChat(chat)">
+        {{ chat.name }}
+      </div>
     </div>
     <h5 v-else class="NoChats">Ainda não tem histórico de conversas :(</h5>
   </div>

@@ -5,9 +5,14 @@ import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import type { Chat } from '@/domain/Chat'
 
+const emit = defineEmits(['change-chat'])
 defineProps<{
   chats: Chat[]
 }>()
+
+const onChangeChat = (selectedChat: Chat) => {
+  emit('change-chat', selectedChat)
+}
 
 const drawerWidth = ref('50%')
 
@@ -27,10 +32,10 @@ const drawerIsOpened = ref(false)
 <template>
   <MenuIcon class="MenuIcon" @click="drawerIsOpened = true" />
 
-  <SidebarContent class="Sidebar" />
+  <SidebarContent @change-chat="onChangeChat" class="Sidebar" />
 
   <ElDrawer v-model="drawerIsOpened" :direction="'ltr'" :size="drawerWidth">
-    <SidebarContent />
+    <SidebarContent @change-chat="onChangeChat" />
   </ElDrawer>
 </template>
 
