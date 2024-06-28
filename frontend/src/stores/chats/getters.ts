@@ -5,12 +5,16 @@ export const getChatByName = (name: string) => {
 }
 
 export const getLastChat = () => {
+  const localStorageChats = getChats()
+  return [...localStorageChats].pop()
+}
+
+export const getChats = () => {
   const localStorageChatsString = localStorage.getItem('chats')
 
   if (!localStorageChatsString) {
     return undefined
   }
 
-  const localStorageChats = JSON.parse(localStorageChatsString)
-  return [...localStorageChats].pop()
+  return JSON.parse(localStorageChatsString)
 }

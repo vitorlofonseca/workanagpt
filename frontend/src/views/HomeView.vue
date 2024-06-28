@@ -6,7 +6,9 @@ import { type Chat as ChatDomain } from '@/domain/Chat'
 import { useChatsStore } from '@/stores/chats/index'
 
 const chatsStore = useChatsStore()
+
 const chat: Ref<ChatDomain> = ref({} as ChatDomain)
+const chats: Ref<ChatDomain[]> = ref([])
 
 const initializeChat = (chatName: string) => {
   chat.value.name = chatName
@@ -16,8 +18,7 @@ const initializeChat = (chatName: string) => {
 
 onMounted(() => {
   chatsStore.initializeChats()
-  const lastChat = chatsStore.getLastChat()
-  chat.value = lastChat || { messages: [] }
+  chats.value = chatsStore.getChats()
 })
 </script>
 

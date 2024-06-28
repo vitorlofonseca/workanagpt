@@ -3,6 +3,11 @@ import SidebarContent from './SidebarContent.vue'
 import { ElDrawer } from 'element-plus'
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import type { Chat } from '@/domain/Chat'
+
+defineProps<{
+  chats: Chat[]
+}>()
 
 const drawerWidth = ref('50%')
 

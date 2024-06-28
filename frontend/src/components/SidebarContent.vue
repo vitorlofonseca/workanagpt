@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { CirclePlus } from '@element-plus/icons-vue'
+import { useChatsStore } from '@/stores/chats/index'
+
+const chatsStore = useChatsStore()
+
+defineEmits(['change-chat'])
 </script>
 
 <template>
@@ -13,7 +18,10 @@ import { CirclePlus } from '@element-plus/icons-vue'
       <CirclePlus class="SidebarContent__AddIcon" />
     </div>
 
-    <h5 class="SidebarContent__Content">Ainda não tem histórico de conversas :(</h5>
+    <div v-if="chatsStore.chats.length > 0" class="ChatsList">
+      <div v-for="chat in chatsStore.chats" class="ChatsList__Chat">{{ chat.name }}</div>
+    </div>
+    <h5 v-else class="NoChats">Ainda não tem histórico de conversas :(</h5>
   </div>
 </template>
 
@@ -40,7 +48,7 @@ import { CirclePlus } from '@element-plus/icons-vue'
     cursor: pointer;
   }
 
-  &__Content {
+  .NoChats {
     height: 80vh;
 
     display: flex;
@@ -48,11 +56,26 @@ import { CirclePlus } from '@element-plus/icons-vue'
     align-items: center;
     text-align: center;
   }
+
+  .ChatsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+
+    &__Chat {
+      background-color: lighten($color: $color-primary, $amount: 45);
+      padding: 5px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
 }
 
 @media only screen and (max-width: 900px) {
   .SidebarContent {
     max-width: unset;
+    height: 100%;
   }
 }
 </style>

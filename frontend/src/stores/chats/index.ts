@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { chats } from './state'
 import { createChat, pushMessagesToChat, initializeChats } from './actions'
-import { getLastChat } from './getters'
+import { getLastChat, getChats } from './getters'
 
 export const useChatsStore = defineStore('chats', () => {
   return {
@@ -9,6 +9,7 @@ export const useChatsStore = defineStore('chats', () => {
     createChat,
     pushMessagesToChat,
     getLastChat,
-    initializeChats
+    initializeChats,
+    getChats
   }
 })

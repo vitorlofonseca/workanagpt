@@ -1,6 +1,7 @@
 import type { Chat } from '@/domain/Chat'
 import type { Message } from '@/domain/Message'
 import { chats } from './state'
+import { getChats } from './getters'
 
 export const createChat = (chat: Chat) => {
   chats.value.push(chat)
@@ -22,12 +23,6 @@ const updateChatsLocalStorage = () => {
 }
 
 export const initializeChats = () => {
-  const localStorageChatsString = localStorage.getItem('chats')
-
-  if (!localStorageChatsString) {
-    return
-  }
-
-  const localStorageChats = JSON.parse(localStorageChatsString)
-  chats.value = localStorageChats
+  const localStorageChats = getChats()
+  chats.value = localStorageChats || []
 }
