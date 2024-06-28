@@ -6,19 +6,13 @@ import EmptyChat from './EmptyChat.vue'
 import ChatMessages from './ChatMessages.vue'
 import type { Chat } from '@/domain/Chat'
 import { useChatsStore } from '@/stores/chats/index'
+import { mockedAnswers } from '@/data/mockedAnswers'
 
 const chatsStore = useChatsStore()
 
 const props = defineProps<{
   chat: Chat
 }>()
-
-const mockedAnswers = [
-  {
-    question: 'O que devo fazer para ser um bom freelancer?',
-    answer: 'Ser um bom freelancer envolve diversas habilidades e práticas. Pipipi popopo'
-  }
-]
 
 const emit = defineEmits(['initialize-chat'])
 

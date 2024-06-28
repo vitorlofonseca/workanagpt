@@ -1,13 +1,28 @@
 <script setup lang="ts">
 import type { Message } from '@/domain/Message'
+import { nextTick, ref, watch } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   messages: Message[]
 }>()
+
+const chatMessagesDiv = ref()
+
+watch(
+  () => props.messages.length,
+  async () => {
+    await nextTick()
+    scrollMessagesDown()
+  }
+)
+
+const scrollMessagesDown = () => {
+  chatMessagesDiv.value.scrollTop = chatMessagesDiv.value.scrollHeight
+}
 </script>
 
 <template>
-  <div class="Chat">
+  <div class="Chat" ref="chatMessagesDiv">
     <div
       v-for="message in messages"
       :class="['Message ', message.author === 'user' && 'Message--right']"
