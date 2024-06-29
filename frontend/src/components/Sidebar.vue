@@ -6,9 +6,6 @@ import { ref } from 'vue'
 import type { Chat } from '@/domain/Chat'
 
 const emit = defineEmits(['change-chat', 'add-chat'])
-defineProps<{
-  chats: Chat[]
-}>()
 
 const onChangeChat = (selectedChat: Chat) => {
   emit('change-chat', selectedChat)
